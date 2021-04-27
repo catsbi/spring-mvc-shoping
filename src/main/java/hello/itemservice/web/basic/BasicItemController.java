@@ -5,9 +5,7 @@ import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -34,6 +32,52 @@ public class BasicItemController {
         return "/basic/item";
     }
 
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
+    }
+
+    /**
+     * RequestParam을 이용한 매핑 방식 (Legacy)
+     * @param item
+     * @param model
+     * @return
+     */
+    /*@PostMapping("/add")
+    public String saveLegacy(@RequestParam String itemName,
+                             @RequestParam int price,
+                             @RequestParam Integer quantity,
+                             Model model) {
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+
+        Item save = itemRepository.save(item);
+        model.addAttribute("item", save);
+        return "basic/item";
+    }*/
+
+    /*@PostMapping("/add")
+    public String saveV2(@ModelAttribute("item") Item item, Model model) {
+        Item save = itemRepository.save(item);
+        //model.addAttribute("item", save); //생략 가능
+        return "basic/item";
+    }*/
+
+    /*@PostMapping("/add")
+    public String saveV3(@ModelAttribute Item item, Model model) {
+        itemRepository.save(item);
+        //model.addAttribute("item", save);
+        return "basic/item";
+    }*/
+
+    @PostMapping("/add")
+    public String saveV4(Item item, Model model) {
+        itemRepository.save(item);
+        //model.addAttribute("item", save);
+        return "basic/item";
+    }
 
 
     @PostConstruct
