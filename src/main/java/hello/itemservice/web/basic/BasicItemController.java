@@ -24,6 +24,7 @@ public class BasicItemController {
 
         return "/basic/items";
     }
+
     @GetMapping("/{itemId}")
     public String item(Model model, @PathVariable Long itemId) {
         Item item = itemRepository.findById(itemId);
@@ -39,6 +40,7 @@ public class BasicItemController {
 
     /**
      * RequestParam을 이용한 매핑 방식 (Legacy)
+     *
      * @param item
      * @param model
      * @return
@@ -72,11 +74,18 @@ public class BasicItemController {
         return "basic/item";
     }*/
 
-    @PostMapping("/add")
-    public String saveV4(Item item, Model model) {
+    /*@PostMapping("/add")
+    public String saveV4(Item item) {
         itemRepository.save(item);
         //model.addAttribute("item", save);
         return "basic/item";
+    }*/
+
+    @PostMapping("/add")
+    public String saveV5(Item item) {
+        itemRepository.save(item);
+        //model.addAttribute("item", save);
+        return "redirect:/basic/items/" + item.getId();
     }
 
     @GetMapping("/{itemId}/edit")
@@ -86,6 +95,7 @@ public class BasicItemController {
 
         return "basic/editForm";
     }
+
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
